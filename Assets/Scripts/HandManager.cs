@@ -36,15 +36,21 @@ public class HandManager : MonoBehaviour
         if (handCards.Count == 0) return;
 
         GameObject c = handCards[handCards.Count - 1];
+        if (c != null) {
         handCards.RemoveAt(handCards.Count - 1);
+        c.transform.DOKill();
         Destroy(c);
         UpdateCardPositions();
+        }
     }
     private void UpdateCardPositions() {
         if (handCards.Count == 0) return;
         float cardSpacing = 1f / maxHandSize; 
         float firstCardPosition = 0.5f - (handCards.Count - 1) * cardSpacing / 2;
         Spline spline = splineContainer.Spline;
+        for (int i = 0; i < handCards.Count; i++) {
+            handCards[i].GetComponent<SpriteRenderer>().sortingOrder = i;
+        }
 
         for (int i = 0; i < handCards.Count; i++) {
             float p = firstCardPosition + i * cardSpacing;
@@ -52,6 +58,7 @@ public class HandManager : MonoBehaviour
             Vector3 splineForward = spline.EvaluateTangent(p);
             Vector3 splineUp = spline.EvaluateUpVector(p);
             Quaternion rotation = Quaternion.LookRotation(splineUp, Vector3.Cross(splineForward, splineUp)).normalized;
+            handCards[i].transform.DOKill();
             handCards[i].transform.DOMove(splinePosition, 0.5f);
             handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.5f); 
         }

@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -38,6 +38,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 294771051
+    locked: 0
+  - name: Board
+    uniqueID: 2324297029
+    locked: 0
+  - name: Ships
+    uniqueID: 1686103577
+    locked: 0
+  - name: Cards
+    uniqueID: 2199467677
+    locked: 0
+  - name: Effects
+    uniqueID: 879056337
+    locked: 0
+  - name: Foreground
+    uniqueID: 2952378961
+    locked: 0
+  - name: UI
+    uniqueID: 9992683
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  m_RenderingLayers:
+  - Default
+  m_MigratedRenderPipelines: []
