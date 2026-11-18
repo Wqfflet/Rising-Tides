@@ -1,32 +1,62 @@
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
-    [SerializeField] private Color color = Color.white;
-    [SerializeField] private Color subcolor = Color.black;
+public class Tile : MonoBehaviour
+{
+    
+    [SerializeField] private Color color;
+
+    [SerializeField] private Color color2;
+
+    [SerializeField] private Color color3;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private bool isSelected = false;    
-    private void Awake() {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    public string tileID;
+    public Vector2Int gridPosition;
+    public bool hasShip = false;
+    public GameObject currentShip = null;
 
-        if (spriteRenderer != null) {
+    public void Setup(Vector2Int pos) 
+    {
+        gridPosition = pos;
+        tileID = $"{pos.x:D2}{pos.y:D2}";
+    }
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        spriteRenderer.color = color;
+    }
+    private void OnMouseEnter()
+    {
+        spriteRenderer.color = color2;
+    }
+
+    private void OnMouseExit()
+    {
+        if (!GridManager.Instance.tilesClicked.Contains(this))
+        {
             spriteRenderer.color = color;
-        }
-    }
-    private void OnMouseDown() {
-        Debug.Log("OnMouseDown triggered on tile: " + gameObject.name);
-
-        if (GridManager.Instance != null) {
-            GridManager.Instance.tileSelection(this);
+        } else {
+        spriteRenderer.color = color3;
         }
     }
 
-    public void SetSelected(bool selected) {
-        isSelected = selected;
-        if (spriteRenderer != null) {
-            Color targetColor = isSelected ? subcolor : color;
-            spriteRenderer.color = targetColor;
+    private void OnMouseDown()
+    {
+        if (!GridManager.Instance.tilesClicked.Contains(this))
+        {
+            if (GridManager.Instance.tilesClicked.Count < GridManager.Instance.maxSelected)
+            {
+                spriteRenderer.color = color3;
+                GridManager.Instance.tilesClicked.Add(this);
+            }   
+        } else {
+        spriteRenderer.color = color;
+        GridManager.Instance.tilesClicked.Remove(this);
         }
     }
-
 }
