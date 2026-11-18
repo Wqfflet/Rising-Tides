@@ -14,7 +14,6 @@ public class Tile : MonoBehaviour
     public string tileID;
     public Vector2Int gridPosition;
     public bool hasShip = false;
-    public GameObject currentShip = null;
 
     public void Setup(Vector2Int pos) 
     {
@@ -22,14 +21,15 @@ public class Tile : MonoBehaviour
         tileID = $"{pos.x:D2}{pos.y:D2}";
     }
     private void Awake()
+{
+    spriteRenderer = GetComponent<SpriteRenderer>();
+    spriteRenderer.color = color;
+}
+    public void HighlightTile()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+    spriteRenderer.color = color3;
     }
-
-    private void Start()
-    {
-        spriteRenderer.color = color;
-    }
+    
     private void OnMouseEnter()
     {
         spriteRenderer.color = color2;
@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!GridManager.Instance.tilesClicked.Contains(this))
+        if (!GridManager.Instance.computerTiles.Contains(this))
         {
             spriteRenderer.color = color;
         } else {
@@ -47,13 +47,13 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GridManager.Instance.tilesClicked.Contains(this))
+        if (gridPosition.x == 0 || gridPosition.x == 9 || gridPosition.y == 0 || gridPosition.y == 9)
         {
-            if (GridManager.Instance.tilesClicked.Count < GridManager.Instance.maxSelected)
-            {
-                spriteRenderer.color = color3;
-                GridManager.Instance.tilesClicked.Add(this);
-            }   
+            return;
+        }
+        if (!GridManager.Instance.tilesClicked.Contains(this)) {
+            spriteRenderer.color = color3;
+            GridManager.Instance.tilesClicked.Add(this); 
         } else {
         spriteRenderer.color = color;
         GridManager.Instance.tilesClicked.Remove(this);
