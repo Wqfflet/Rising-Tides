@@ -11,7 +11,6 @@ public class Tile : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    public string tileID;
     public Vector2Int gridPosition;
     public bool hasShip = false;
 

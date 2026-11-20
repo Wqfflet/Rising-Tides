@@ -10,6 +10,7 @@ public class GridManager : MonoBehaviour
     public List<Tile> tilesClicked = new List<Tile>();
     public int maxShips;
 
+    [System.NonSerialized]
     public Tile[,] gridTiles;
 
     public int ships = 0;
@@ -58,10 +59,6 @@ public class GridManager : MonoBehaviour
 
     private void placeRandomShape()
     {
-        int[,] one = new int[,] {
-            {1},
-        };
-
         int[,] twoWide = new int[,] {
             {1, 1},
         };
@@ -105,7 +102,7 @@ public class GridManager : MonoBehaviour
         };
 
         List<int[,]> shapeList = new List<int[,]>() 
-        { one, twoWide, twoTall, threeWide, threeTall, 
+        { twoWide, twoTall, threeWide, threeTall, 
         fourWide, fourTall, fiveWide, fiveTall };
 
 
