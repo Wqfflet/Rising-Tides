@@ -15,10 +15,9 @@ public class Tile : MonoBehaviour
     public Vector2Int gridPosition;
     public bool hasShip = false;
 
-    public void Setup(Vector2Int pos) 
+    public void setPos(Vector2Int pos) 
     {
         gridPosition = pos;
-        tileID = $"{pos.x:D2}{pos.y:D2}";
     }
     private void Awake()
 {
@@ -47,16 +46,6 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (gridPosition.x == 0 || gridPosition.x == 9 || gridPosition.y == 0 || gridPosition.y == 9)
-        {
-            return;
-        }
-        if (!GridManager.Instance.tilesClicked.Contains(this)) {
-            spriteRenderer.color = color3;
-            GridManager.Instance.tilesClicked.Add(this); 
-        } else {
-        spriteRenderer.color = color;
-        GridManager.Instance.tilesClicked.Remove(this);
-        }
+        
     }
 }

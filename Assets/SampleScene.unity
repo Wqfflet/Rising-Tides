@@ -502,11 +502,11 @@ MonoBehaviour:
   tileWidth: 0.65
   tilePrefab: {fileID: 3978843433136192832, guid: a55ad458a210140e8b2ebaa9f12075fb, type: 3}
   tilesClicked: []
-  maxShips: 5
+  maxShips: 3
   ships: 0
   computerTiles: []
   tries: 0
-  maxTries: 50
+  maxTries: 1000
 --- !u!4 &2014646136
 Transform:
   m_ObjectHideFlags: 0

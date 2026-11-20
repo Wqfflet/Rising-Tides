@@ -44,7 +44,7 @@ public class GridManager : MonoBehaviour
                 Tile tileClass = newTile.GetComponent<Tile>();
                 if (tileClass != null)
                 {
-                    tileClass.Setup(new Vector2Int(x, y));
+                    tileClass.setPos(new Vector2Int(x, y));
                     gridTiles[x, y] = tileClass;
                 }
             }
@@ -58,51 +58,55 @@ public class GridManager : MonoBehaviour
 
     private void placeRandomShape()
     {
-        int[,] Lshape = new int[,] {
-            {1, 0, 0},
-            {1, 0, 0},
+        int[,] one = new int[,] {
+            {1},
+        };
+
+        int[,] twoWide = new int[,] {
+            {1, 1},
+        };
+
+        int[,] twoTall = new int[,] {
+            {1},
+            {1},
+        };
+
+        int[,] threeWide = new int[,] {
             {1, 1, 1},
         };
 
-        int[,] SLshape = new int[,] {
-            {1, 0, 0},
-            {1, 1, 0},
-            {0, 0, 0},
+        int[,] threeTall = new int[,] {
+            {1},
+            {1},
+            {1},
         };
 
-        int[,] Ishape = new int[,] {
-            {0, 1, 0},
-            {0, 1, 0},
-            {0, 1, 0},
+        int[,] fourWide = new int[,] {
+            {1, 1, 1, 1},
         };
 
-        int[,] Ushape = new int[,] {
-            {1, 0, 1},
-            {1, 0, 1},
-            {1, 1, 1},
+        int[,] fourTall = new int[,] {
+            {1},
+            {1},
+            {1},
+            {1},
         };
 
-        int[,] Sshape = new int[,] {
-            {1, 0, 0},
-            {1, 1, 0},
-            {0, 1, 0},
+        int[,] fiveWide = new int[,] {
+            {1, 1, 1, 1, 1},
         };
 
-        int[,] Zshape = new int[,] {
-            {0, 0, 1},
-            {0, 1, 1},
-            {0, 1, 0},
-        };
-
-        int[,] Blockshape = new int[,] {
-            {0, 0, 0},
-            {0, 1, 1},
-            {0, 1, 1},
+        int[,] fiveTall = new int[,] {
+            {1},
+            {1},
+            {1},
+            {1},
+            {1},
         };
 
         List<int[,]> shapeList = new List<int[,]>() 
-        {   Lshape, SLshape, Ishape, Ushape, 
-            Sshape, Zshape, Blockshape  };
+        { one, twoWide, twoTall, threeWide, threeTall, 
+        fourWide, fourTall, fiveWide, fiveTall };
 
 
         while (ships < maxShips && tries < maxTries)
@@ -112,23 +116,23 @@ public class GridManager : MonoBehaviour
             int randomIndex = Random.Range(0, shapeList.Count);
             int[,] chosenShape = shapeList[randomIndex];
 
-            int shapeWidth = chosenShape.GetLength(0);
-            int shapeHeight = chosenShape.GetLength(1);
+            int shapeRows = chosenShape.GetLength(0);
+            int shapeCols = chosenShape.GetLength(1);
 
-            int randSpawnX = Random.Range(0, width - shapeWidth + 1);
-            int randSpawnY = Random.Range(0, height - shapeHeight + 1);
+            int randSpawnX = Random.Range(0, width - shapeCols + 1);
+            int randSpawnY = Random.Range(0, height - shapeRows + 1);
 
             bool validSpawn = true;
             List<Tile> tempTiles = new List<Tile>();
 
-            for (int x = 0; x < shapeWidth; x++)
+            for (int row = 0; row < shapeRows; row++)
             {
-                for (int y = 0; y < shapeHeight; y++)
+                for (int col = 0; col < shapeCols; col++)
                 {
-                    if (chosenShape[x,y] == 1)
+                    if (chosenShape[row, col] == 1)
                     {
-                        int targetX = randSpawnX + x;
-                        int targetY = randSpawnY + y;
+                        int targetX = randSpawnX + col;
+                        int targetY = randSpawnY + row;
 
                         if (targetX < width && targetY < height)
                         {
